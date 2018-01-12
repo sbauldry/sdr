@@ -79,11 +79,11 @@ gen spp = 6 - q43socpurpol
 recode q2lengthlive (1 = 5) (2 3 = 1) (4 = 2) (5 = 3) (6 = 4), gen(liv)
 recode q59hrswk q62sphrswk (1 = 0) (2 = 15) (3 = 28) (4 = 37) (5 = 50), ///
   gen(rhrs shrs)
-gen hrs = rhrs + shrs
+gen hrs = (rhrs + shrs)/10
 
 recode q60comm q63spcomm (0 = 0) (1 = 10) (2 = 20) (3 = 35) (4 = 60), ///
   gen(rcom scom)
-gen com = rcom + scom
+gen com = (rcom + scom)/10
 
 recode q65nummem (0 = 0) (1 = 1) (2 = 2) (3 = 3) (4 = 4) (5/9 = 5), gen(org)
 
