@@ -4,7 +4,7 @@
 
 
 *** loading data provided by Virginia
-cd "~/dropbox/research/hlthineq/sdr/sdr-work/sdr-anly-2"
+cd "~/dropbox/research/hlthineq/sdr/sdr-work"
 use "sdr-raw-data/5SITES_Data_MI_SI_2_080816.dta", replace
 keep if _mi_m == 0
 
@@ -76,7 +76,7 @@ gen mlk = (q46mlk == 1) if !mi(q46mlk)
 gen gov = 5 - q44trustgovt
 gen spp = 6 - q43socpurpol
 
-recode q2lengthlive (1 = 6) (2 = 1) (3 = 2) (4 = 3) (5 = 4) (6 = 5), gen(liv)
+recode q2lengthlive (1 = 5) (2 3 = 1) (4 = 2) (5 = 3) (6 = 4), gen(liv)
 recode q59hrswk q62sphrswk (1 = 0) (2 = 15) (3 = 28) (4 = 37) (5 = 50), ///
   gen(rhrs shrs)
 gen hrs = rhrs + shrs
