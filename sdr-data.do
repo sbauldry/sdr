@@ -101,11 +101,14 @@ lab var hrs "household hours work per week"
 lab var com "household hours commute" 
 lab var org "number of organizations"
 
+*** renaming weights
+rename (wate wateint) (wt iwt)
+
 *** keeping variables for analysis
 order site ds1-ds4 dr1-dr4 cr1 cr2 ru1 ru2 ns1-ns4 sm1-sm3 sc1 sc2 ///
   dsp chr dor run nss age act fem race wht mar nch ach edu inc ict ///
-  liv hrs com org pol mlk gov spp
-keep  site-spp
+  liv hrs com org pol mlk gov spp wt iwt
+keep  site-iwt
 
 *** saving data for analysis in Stata
 save sdr-data, replace
