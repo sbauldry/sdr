@@ -24,8 +24,8 @@ forval i = 1/5 {
   esttab m1 using m1_`i'.csv, replace csv b(%9.2f) se(%9.2f) nogap  ///
     keep(`i'.site#c.a2 `i'.site#c.a3 `i'.site#c.fem `i'.site#c.wht  ///
          `i'.site#c.mar `i'.site#c.ach `i'.site#c.edu `i'.site#c.i2 ///
-	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.hrs `i'.site#c.p2  ///
-		 `i'.site#c.p3 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
+	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.p2 `i'.site#c.p3   ///
+		 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
 }
 estat ginvariant
 estat eqgof
@@ -42,8 +42,8 @@ forval i = 1/5 {
   esttab m2 using m2_`i'.csv, replace csv b(%9.2f) se(%9.2f) nogap  ///
     keep(`i'.site#c.a2 `i'.site#c.a3 `i'.site#c.fem `i'.site#c.wht  ///
          `i'.site#c.mar `i'.site#c.ach `i'.site#c.edu `i'.site#c.i2 ///
-	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.hrs `i'.site#c.p2  ///
-		 `i'.site#c.p3 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
+	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.p2 `i'.site#c.p3   ///
+		 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
 }
 estat ginvariant
 estat eqgof
@@ -60,8 +60,8 @@ forval i = 1/5 {
   esttab m3 using m3_`i'.csv, replace csv b(%9.2f) se(%9.2f) nogap  ///
     keep(`i'.site#c.a2 `i'.site#c.a3 `i'.site#c.fem `i'.site#c.wht  ///
          `i'.site#c.mar `i'.site#c.ach `i'.site#c.edu `i'.site#c.i2 ///
-	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.hrs `i'.site#c.p2  ///
-		 `i'.site#c.p3 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
+	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.p2 `i'.site#c.p3   ///
+		 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
 }
 estat ginvariant
 estat eqgof
@@ -77,8 +77,8 @@ forval i = 1/5 {
   esttab m4 using m4_`i'.csv, replace csv b(%9.2f) se(%9.2f) nogap  ///
     keep(`i'.site#c.a2 `i'.site#c.a3 `i'.site#c.fem `i'.site#c.wht  ///
          `i'.site#c.mar `i'.site#c.ach `i'.site#c.edu `i'.site#c.i2 ///
-	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.hrs `i'.site#c.p2  ///
-		 `i'.site#c.p3 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
+	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.p2 `i'.site#c.p3   ///
+		 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
 }
 estat ginvariant
 estat eqgof
@@ -94,8 +94,8 @@ forval i = 1/5 {
   esttab m5 using m5_`i'.csv, replace csv b(%9.2f) se(%9.2f) nogap  ///
     keep(`i'.site#c.a2 `i'.site#c.a3 `i'.site#c.fem `i'.site#c.wht  ///
          `i'.site#c.mar `i'.site#c.ach `i'.site#c.edu `i'.site#c.i2 ///
-	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.hrs `i'.site#c.p2  ///
-		 `i'.site#c.p3 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
+	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.p2 `i'.site#c.p3   ///
+		 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
 }
 estat ginvariant
 estat eqgof
