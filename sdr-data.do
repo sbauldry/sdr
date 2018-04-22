@@ -2,8 +2,8 @@
 *** Author: S Bauldry
 *** Date: Dec 28, 2017
 
-*** loading data provided by Virginia
-cd "~/dropbox/research/hlthineq/sdr/sdr-work"
+*** loading data on 5 sites provided by Virginia
+cd "~/dropbox/research/statistics/sdr/sdr-work"
 use "sdr-raw-data/5SITES_Data_MI_SI_2_080816.dta", replace
 keep if _mi_m == 0
 
@@ -110,9 +110,74 @@ order site ds1-ds4 dr1-dr4 cr1 cr2 ru1 ru2 ns1 ns2 ns3 ns4 dsp chr dor reu ///
 keep  site-iwt
 
 *** saving data for analysis in Stata
-save sdr-data, replace
+save sdr-data-sites, replace
 
 *** saving data for analysis in Mplus
 recode _all (. = -9)
 desc
-outsheet using sdr-data-mplus.txt, replace comma noname nolabel
+outsheet using sdr-data-sites-mplus.txt, replace comma noname nolabel
+
+
+
+
+
+*** loading 2011 Wake data provided by Virginia
+use "sdr-raw-data/Wake_Data_2011.dta", replace
+keep if _mi_m == 0
+
+* group variable
+gen time = 1
+
+* diversity support measures 
+rename (q29diverse q30diverse1 q31diverse2 q32diverse3) (ds1 ds2 ds3 ds4) 
+ 
+* neighborhood school support measures 
+rename (q18neighbor q28neighbor1 q36taxes q19bussing) (ns1 ns2 ns3 ns4)
+
+* constructing summative scales
+gen dsp = ds1 + ds2 + ds3 + ds4
+gen nss = ns1 + ns2 + ns3 + ns4
+
+* sociodemographics
+recode q46q47age1 (0/30 = 1) (31/45 = 2) (45/99 = 3), gen(act)
+recode q49householdinc (1 = 1) (2 3 = 2) (4 5 6 = 3), gen(ict)
+recode q51education (1 = 10) (2 = 12) (3 = 14) (4 = 16) (5 = 18), gen(edu)
+gen ach = (q67numberchildren > 0) if !mi(q67numberchildren)
+gen fem = (q48gender == 2) if !mi(q48gender)
+gen wht = (q50race == 2) if !mi(q50race)
+gen mar = (q6married == 1) if !mi(q6married)
+rename (q17ideology) (pol) 
+gen mlk = (q42mlk == 1) if !mi(q42mlk)
+recode q2lengthwake (1 = 5) (2 3 = 1) (4 = 2) (5 = 3) (6 = 4), gen(liv)
+
+* renaming weight
+rename (totalweight) (wt)
+
+keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 act ict edu ach fem wht mar ///
+  pol mlk liv
+
+*** saving data for appending
+tempfile d1
+save `d1', replace
+
+
+*** loading 5 site data and preparing for appending
+use sdr-data-sites, replace
+keep if site == 1
+gen time = 2
+
+append using `d1'
+
+keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 act ict edu ach fem wht mar ///
+  pol mlk liv
+
+*** saving data for analysis in Stata
+save sdr-data-wake, replace
+
+*** saving data for analysis in Mplus
+recode _all (. = -9)
+desc
+outsheet using sdr-data-wake-mplus.txt, replace comma noname nolabel  
+
+
+  
