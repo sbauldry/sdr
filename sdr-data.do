@@ -70,6 +70,7 @@ save sdr-data-sites, replace
 
 *** saving data for analysis in Mplus
 recode _all (. = -9)
+keep site wt ds1-ds4 ns1-ns4
 desc
 outsheet using sdr-data-sites-mplus.txt, replace comma noname nolabel
 
@@ -108,7 +109,7 @@ recode q2lengthwake (1 = 5) (2 3 = 1) (4 = 2) (5 = 3) (6 = 4), gen(liv)
 rename (FINALRAKER) (wt)
 
 keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 act ict edu ach fem wht mar ///
-  pol mlk liv
+  pol mlk liv wt
 
 *** saving data for appending
 tempfile d1
@@ -124,12 +125,13 @@ append using `d1'
 
 keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 act ict edu ach fem wht mar ///
   pol mlk liv wt
-
+  
 *** saving data for analysis in Stata
 save sdr-data-wake, replace
 
 *** saving data for analysis in Mplus
 recode _all (. = -9)
+keep time wt ds1-ds4 ns1-ns4
 desc
 outsheet using sdr-data-wake-mplus.txt, replace comma noname nolabel  
 
