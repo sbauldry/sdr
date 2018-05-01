@@ -78,7 +78,6 @@ outsheet using sdr-data-sites-mplus.txt, replace comma noname nolabel
 
 *** loading 2011 Wake data provided by Virginia
 use "sdr-raw-data/Wake_Data_2011.dta", replace
-keep if _mi_m == 0
 
 * group variable
 gen time = 1
@@ -102,6 +101,7 @@ gen fem = (q48gender == 2) if !mi(q48gender)
 gen wht = (q50race == 2) if !mi(q50race)
 gen mar = (q6married == 1) if !mi(q6married)
 rename (q17ideology) (pol) 
+recode q39localgovt (5 = .) (1 = 4) (2 = 3) (3 = 2) (4 = 1), gen(gov)
 gen mlk = (q42mlk == 1) if !mi(q42mlk)
 recode q2lengthwake (1 = 5) (2 3 = 1) (4 = 2) (5 = 3) (6 = 4), gen(liv)
 
@@ -109,7 +109,7 @@ recode q2lengthwake (1 = 5) (2 3 = 1) (4 = 2) (5 = 3) (6 = 4), gen(liv)
 rename (FINALRAKER) (wt)
 
 keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 act ict edu ach fem wht mar ///
-  pol mlk liv wt
+  pol gov mlk liv wt
 
 *** saving data for appending
 tempfile d1
@@ -124,7 +124,7 @@ gen time = 2
 append using `d1'
 
 keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 act ict edu ach fem wht mar ///
-  pol mlk liv wt
+  pol gov mlk liv wt
   
 *** saving data for analysis in Stata
 save sdr-data-wake, replace
