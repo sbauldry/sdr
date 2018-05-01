@@ -69,8 +69,15 @@ keep  site-wt
 save sdr-data-sites, replace
 
 *** saving data for analysis in Mplus
+qui tab act, gen(a)
+qui tab ict, gen(i)
+qui tab pol, gen(p) 
+
 recode _all (. = -9)
-keep site wt ds1-ds4 ns1-ns4
+
+order site wt ds1-ds4 ns1-ns4 a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk ///
+  gov spp
+keep site-spp
 desc
 outsheet using sdr-data-sites-mplus.txt, replace comma noname nolabel
 
@@ -130,8 +137,14 @@ keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 act ict edu ach fem wht mar ///
 save sdr-data-wake, replace
 
 *** saving data for analysis in Mplus
+qui tab act, gen(a)
+qui tab ict, gen(i)
+qui tab pol, gen(p) 
+
 recode _all (. = -9)
-keep time wt ds1-ds4 ns1-ns4
+
+order time wt ds1-ds4 ns1-ns4 a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov
+keep time-gov
 desc
 outsheet using sdr-data-wake-mplus.txt, replace comma noname nolabel  
 
