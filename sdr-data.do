@@ -27,8 +27,8 @@ foreach x of varlist ds* ns* {
 gen dsp = ds1 + ds2 + ds3 + ds4
 gen nss = ns1 + ns2 + ns3 + ns4
 
-lab var dsp "diversity support (a = 0.91)"
-lab var nss "neighborhood school support (a = 0.51)"
+lab var dsp "diversity support"
+lab var nss "neighborhood school support"
 
 *** sociodemographics
 rename (q52age  income_cont) (age inc)
@@ -130,8 +130,8 @@ gen time = 2
 
 append using `d1'
 
-keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 act ict edu ach fem wht mar ///
-  pol gov mlk liv wt
+keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 dsp nss act ict edu ach fem wht ///
+  mar pol gov mlk liv wt
   
 *** saving data for analysis in Stata
 save sdr-data-wake, replace
