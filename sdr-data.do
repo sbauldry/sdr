@@ -66,7 +66,8 @@ order site ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 dsp nss age act fem wht mar ach ///
 keep  site-wt
 
 *** saving data for analysis in Stata
-save sdr-data-sites, replace
+mi unset, asis
+save sdr-data-site, replace
 
 *** saving data for analysis in Mplus
 qui tab act, gen(a)
@@ -79,7 +80,7 @@ order site wt ds1-ds4 ns1-ns4 a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk ///
   gov spp
 keep site-spp
 desc
-outsheet using sdr-data-sites-mplus.txt, replace comma noname nolabel
+outsheet using sdr-data-site-mplus.txt, replace comma noname nolabel
 
 
 
@@ -87,7 +88,7 @@ outsheet using sdr-data-sites-mplus.txt, replace comma noname nolabel
 use "sdr-raw-data/Wake_Data_2011.dta", replace
 
 * group variable
-gen time = 1
+gen time = 2011
 
 * diversity support measures 
 rename (q29diverse q30diverse1 q31diverse2 q32diverse3) (ds1 ds2 ds3 ds4) 
@@ -115,8 +116,8 @@ recode q2lengthwake (1 = 5) (2 3 = 1) (4 = 2) (5 = 3) (6 = 4), gen(liv)
 * renaming weight
 rename (FINALRAKER) (wt)
 
-keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 act ict edu ach fem wht mar ///
-  pol gov mlk liv wt
+keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 dsp nss act ict edu ach fem wht ///
+  mar pol gov mlk liv wt
 
 *** saving data for appending
 tempfile d1
@@ -126,7 +127,7 @@ save `d1', replace
 *** loading 5 site data and preparing for appending
 use sdr-data-sites, replace
 keep if site == 1
-gen time = 2
+gen time = 2015
 
 append using `d1'
 
@@ -134,7 +135,8 @@ keep time ds1 ds2 ds3 ds4 ns1 ns2 ns3 ns4 dsp nss act ict edu ach fem wht ///
   mar pol gov mlk liv wt
   
 *** saving data for analysis in Stata
-save sdr-data-wake, replace
+mi unset, asis
+save sdr-data-time, replace
 
 *** saving data for analysis in Mplus
 qui tab act, gen(a)
@@ -146,7 +148,7 @@ recode _all (. = -9)
 order time wt ds1-ds4 ns1-ns4 a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov
 keep time-gov
 desc
-outsheet using sdr-data-wake-mplus.txt, replace comma noname nolabel  
+outsheet using sdr-data-time-mplus.txt, replace comma noname nolabel  
 
 
   
