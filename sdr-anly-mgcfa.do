@@ -2,10 +2,6 @@
 *** Author: S Bauldry
 *** Date: January 25, 2018
 
-*** Note: this is an update of a prior mgCFA analysis that did not use weights
-*** Stata does not provide model fit statistics when using weights, so I 
-*** switched to Mplus for this analysis.
-
 
 *** program to extract latent means and variances from Mplus output
 capture program drop ParEst

@@ -88,7 +88,7 @@ outsheet using sdr-data-site-mplus.txt, replace comma noname nolabel
 use "sdr-raw-data/Wake_Data_2011.dta", replace
 
 * group variable
-gen time = 2011
+gen time = 2
 
 * diversity support measures 
 rename (q29diverse q30diverse1 q31diverse2 q32diverse3) (ds1 ds2 ds3 ds4) 
@@ -127,7 +127,7 @@ save `d1', replace
 *** loading 5 site data and preparing for appending
 use sdr-data-site, replace
 keep if site == 1
-gen time = 2015
+gen time = 1
 
 append using `d1'
 
