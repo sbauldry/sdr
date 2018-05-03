@@ -125,7 +125,7 @@ save `d1', replace
 
 
 *** loading 5 site data and preparing for appending
-use sdr-data-sites, replace
+use sdr-data-site, replace
 keep if site == 1
 gen time = 2015
 
