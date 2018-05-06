@@ -15,23 +15,23 @@ bysort time: alpha ns1-ns4
 
 * difference in means
 svy: mean dsp nss, over(time)
-test [dsp]2011 = [dsp]2015
-test [nss]2011 = [nss]2015
+test [dsp]1 = [dsp]2
+test [nss]1 = [nss]2
 
 * difference in variances (Stas)
 gen dsp2 = dsp^2
 svy: mean dsp dsp2, over(time)
-nlcom  ( _b[dsp2:2011] - _b[dsp:2011]*_b[dsp:2011] ) 
-nlcom  ( _b[dsp2:2015] - _b[dsp:2015]*_b[dsp:2015] ) 
-testnl ( _b[dsp2:2011] - _b[dsp:2011]*_b[dsp:2011] ) ///
-     = ( _b[dsp2:2015] - _b[dsp:2015]*_b[dsp:2015] )
+nlcom  ( _b[dsp2:1] - _b[dsp:1]*_b[dsp:1] ) 
+nlcom  ( _b[dsp2:2] - _b[dsp:2]*_b[dsp:2] ) 
+testnl ( _b[dsp2:1] - _b[dsp:1]*_b[dsp:1] ) ///
+     = ( _b[dsp2:2] - _b[dsp:2]*_b[dsp:2] )
 
 gen nss2 = nss^2
 svy: mean nss nss2, over(time)
-nlcom  ( _b[nss2:2011] - _b[nss:2011]*_b[nss:2011] ) 
-nlcom  ( _b[nss2:2015] - _b[nss:2015]*_b[nss:2015] ) 
-testnl ( _b[nss2:2011] - _b[nss:2011]*_b[nss:2011] ) ///
-     = ( _b[nss2:2015] - _b[nss:2015]*_b[nss:2015] )
+nlcom  ( _b[nss2:1] - _b[nss:1]*_b[nss:1] ) 
+nlcom  ( _b[nss2:2] - _b[nss:2]*_b[nss:2] ) 
+testnl ( _b[nss2:1] - _b[nss:1]*_b[nss:1] ) ///
+     = ( _b[nss2:2] - _b[nss:2]*_b[nss:2] )
 
 * difference in predictors
 qui tab act, gen(a)
