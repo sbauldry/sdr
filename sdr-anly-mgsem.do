@@ -155,115 +155,62 @@ postclose PF1
 
 *** Graphing results
 use `d1', replace
-list if gp >= 3 & vr == 15
 
 gen lb = b - 1.96*sqrt(v)
 gen ub = b + 1.96*sqrt(v)
 
-replace id = 5*vr + 0.3*gp
+gen id = 3*vr + 0.3*gp
 
-graph twoway (rcap ub lb id if lv == 3, hor) (scatter id b if lv == 3)
+tempfile g1 g2 g3 g4
+graph twoway (rspike ub lb id if lv == 1, hor)                              ///
+  (scatter id b if lv == 1, msize(tiny) mcolor(black)),                     ///
+  legend(off) ylab(3.5 "age 31-45" 6.5 "age 46+" 9.5 "female" 12.5 "white"  ///
+    15.5 "married" 18.5 "school age kids" 21.5 "education"                  ///
+	24.5 "income 25-75K" 27.5 "income 76K+" 30.5 "years lived"              ///
+	33.5 "moderate" 36.5 "conservative" 39.5 "MLK very favorable"           ///
+	42.5 "trust government", angle(h) grid gstyle(dot)) ytit("")            ///
+	xtit("unstandardized estimate") xlab(-1(0.5)1, grid gstyle(dot))        ///
+	title("Diversity Support") text(12.5 -1 "*") saving(`g1')
 
+graph twoway (rspike ub lb id if lv == 2, hor)                              ///
+  (scatter id b if lv == 2, msize(tiny) mcolor(black)),                     ///
+  legend(off) ylab(3.5 "age 31-45" 6.5 "age 46+" 9.5 "female" 12.5 "white"  ///
+    15.5 "married" 18.5 "school age kids" 21.5 "education"                  ///
+	24.5 "income 25-75K" 27.5 "income 76K+" 30.5 "years lived"              ///
+	33.5 "moderate" 36.5 "conservative" 39.5 "MLK very favorable"           ///
+	42.5 "trust government", angle(h) grid gstyle(dot)) ytit("")            ///
+	xtit("unstandardized estimate") xlab(-1(0.5)1, grid gstyle(dot))        ///
+	title("Neighborhood School Support") text(12.5 -1 "**")                 ///
+	text(21.5 -1 "*") text(27.5 -1 "*") text(30.5 -1 "**")                  ///
+	text(33.5 -1 "**") text(36.5 -1 "**") text(39.5 -1 "***") saving(`g2')
 
-
- mc(black)), legend(off)              ///
-  xlab( , grid gstyle(dot)) ylab(1 "Wake" 2 "CMS" 3 "Rock Hill"     ///
-    4 "Louisville" 5 "Nashville" 6 " " 7 "Wake 2011" 8 "Wake 2015", ///
-	angle(h) grid gstyle(dot)) xtit("estimate") ytit("")            ///
-  tit("Latent Means") saving(`g1')
-
-
-
-	  
+graph twoway (rspike ub lb id if lv == 3, hor) ///
+  (scatter id b if lv == 3, msize(tiny) mcolor(black)), ///
+  legend(off) ylab(4.5 "age 31-45" 7.5 "age 46+" 10.5 "female" 13.5 "white" ///
+    16.5 "married" 19.5 "school age kids" 22.5 "education"                  ///
+	25.5 "income 25-75K" 28.5 "income 76K+" 31.5 "years lived"              ///
+	34.5 "moderate" 37.5 "conservative" 40.5 "MLK very favorable"           ///
+	43.5 "trust government" 46.5 "social purpose politics", angle(h) grid   ///
+	gstyle(dot)) ytit("") xtit("unstandardized estimate") xlab(-1(0.5)1,    ///
+  grid gstyle(dot)) title("Diversity Support") saving(`g3')
   
+graph twoway (rspike ub lb id if lv == 4, hor) ///
+  (scatter id b if lv == 4, msize(tiny) mcolor(black)), ///
+  legend(off) ylab(4.5 "age 31-45" 7.5 "age 46+" 10.5 "female" 13.5 "white" ///
+    16.5 "married" 19.5 "school age kids" 22.5 "education"                  ///
+	25.5 "income 25-75K" 28.5 "income 76K+" 31.5 "years lived"              ///
+	34.5 "moderate" 37.5 "conservative" 40.5 "MLK very favorable"           ///
+	43.5 "trust government" 46.5 "social purpose politics", angle(h) grid   ///
+	gstyle(dot)) ytit("") xtit("unstandardized estimate") xlab(-1(0.5)1,    ///
+  grid gstyle(dot)) title("Neighborhood School Support") text(4.5 -1 "*")   ///
+  text(7.5 -1 "*") text(16.5 -1 "*") saving(`g4')
   
+graph combine "`g1'" "`g2'"
+graph export ~/desktop/fig2.pdf, replace
+
+graph combine "`g3'" "`g4'"
+graph export ~/desktop/fig3.pdf, replace
   
-  
-  
-  
-  
-  
-*** Model for diversity support
-set matsize 10000
-
-eststo m1
-
-forval i = 1/5 {
-  esttab m1 using m1_`i'.csv, replace csv b(%9.2f) se(%9.2f) nogap  ///
-    keep(`i'.site#c.a2 `i'.site#c.a3 `i'.site#c.fem `i'.site#c.wht  ///
-         `i'.site#c.mar `i'.site#c.ach `i'.site#c.edu `i'.site#c.i2 ///
-	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.p2 `i'.site#c.p3   ///
-		 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
-}
-estat ginvariant
-estat eqgof
 
 
-*** Model for neighborhood school support
-set matsize 10000
-qui sem (NSS -> ns1 ns2 ns3 ns4)                                 ///
-  (NSS <- a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov spp) ///
-  [pw = wt], method(mlmv) group(site) ginvariant(mcoef mcons)
-eststo m2
 
-forval i = 1/5 {
-  esttab m2 using m2_`i'.csv, replace csv b(%9.2f) se(%9.2f) nogap  ///
-    keep(`i'.site#c.a2 `i'.site#c.a3 `i'.site#c.fem `i'.site#c.wht  ///
-         `i'.site#c.mar `i'.site#c.ach `i'.site#c.edu `i'.site#c.i2 ///
-	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.p2 `i'.site#c.p3   ///
-		 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
-}
-estat ginvariant
-estat eqgof
-
-
-*** Model for dangers of reassignment
-qui sem (DR -> dr1 dr2 dr3 dr4)                                    ///
-  (DR <- a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov spp)    ///
-  [pw = wt], method(mlmv) cov(e.dr1*e.dr2 e.dr1*e.dr3) group(site) ///
-  ginvariant(mcoef mcons)
-eststo m3
-
-forval i = 1/5 {
-  esttab m3 using m3_`i'.csv, replace csv b(%9.2f) se(%9.2f) nogap  ///
-    keep(`i'.site#c.a2 `i'.site#c.a3 `i'.site#c.fem `i'.site#c.wht  ///
-         `i'.site#c.mar `i'.site#c.ach `i'.site#c.edu `i'.site#c.i2 ///
-	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.p2 `i'.site#c.p3   ///
-		 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
-}
-estat ginvariant
-estat eqgof
-
-
-*** Model for challenges of reassignment   
-qui sem (CR -> cr1@1 cr2@1)                                     ///
-  (CR <- a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov spp) ///
-  [pw = wt], method(mlmv) group(site) ginvariant(mcoef mcons)
-eststo m4
-
-forval i = 1/5 {
-  esttab m4 using m4_`i'.csv, replace csv b(%9.2f) se(%9.2f) nogap  ///
-    keep(`i'.site#c.a2 `i'.site#c.a3 `i'.site#c.fem `i'.site#c.wht  ///
-         `i'.site#c.mar `i'.site#c.ach `i'.site#c.edu `i'.site#c.i2 ///
-	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.p2 `i'.site#c.p3   ///
-		 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
-}
-estat ginvariant
-estat eqgof
-
-
-*** Model for reassignment uncertainties
-qui sem (RU -> ru1@1 ru2@1)                                     ///
-  (RU <- a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov spp) ///
-  [pw = wt], method(mlmv) group(site) ginvariant(mcoef mcons)
-eststo m5
-
-forval i = 1/5 {
-  esttab m5 using m5_`i'.csv, replace csv b(%9.2f) se(%9.2f) nogap  ///
-    keep(`i'.site#c.a2 `i'.site#c.a3 `i'.site#c.fem `i'.site#c.wht  ///
-         `i'.site#c.mar `i'.site#c.ach `i'.site#c.edu `i'.site#c.i2 ///
-	     `i'.site#c.i3 `i'.site#c.liv `i'.site#c.p2 `i'.site#c.p3   ///
-		 `i'.site#c.mlk  `i'.site#c.gov `i'.site#c.spp)
-}
-estat ginvariant
-estat eqgof
