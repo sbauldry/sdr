@@ -1,0 +1,21 @@
+TITLE: (ExV1) diversity support;
+DATA: FILE = sdr-data-time-mplus.txt;
+VARIABLE: NAMES = time wt ds1-ds4 ns1-ns4 dr1-dr4 cr1 cr2 ru1 ru2 
+    a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov;
+  USEVARIABLES = ds1 ds2 ds3 ds4 a2 a3 fem wht mar ach edu i2 i3 
+    liv p2 p3 mlk gov;
+  USEOBS = (time == 2);
+  WEIGHT = wt;
+  MISSING = ALL(-9);
+ANALYSIS: ESTIMATOR = MLR;
+MODEL:
+
+DS BY ds1 ds2 ds3 ds4;
+ds1 WITH ds2 ds3;
+
+DS ON a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov;
+a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov;
+
+OUTPUT: STDYX;
+
+

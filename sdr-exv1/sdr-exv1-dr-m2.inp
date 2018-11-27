@@ -1,0 +1,21 @@
+TITLE: (ExV1) reassignment dangers;
+DATA: FILE = sdr-data-time-mplus.txt;
+VARIABLE: NAMES = time wt ds1-ds4 ns1-ns4 dr1-dr4 cr1 cr2 ru1 ru2 
+    a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov;
+  USEVARIABLES = dr1 dr2 dr3 dr4  a2 a3 fem wht mar ach edu i2 i3 
+    liv p2 p3 mlk gov;
+  USEOBS = (time == 2);
+  WEIGHT = wt;
+  MISSING = ALL(-9);
+ANALYSIS: ESTIMATOR = MLR;
+MODEL:
+
+DR BY dr1 dr2 dr3 dr4;
+dr1 WITH dr2 dr3;
+
+DR ON  a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov;
+a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov;
+
+OUTPUT: STDYX;
+
+

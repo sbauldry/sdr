@@ -1,0 +1,20 @@
+TITLE: (ExV1) reassignment challenges;
+DATA: FILE = sdr-data-time-mplus.txt;
+VARIABLE: NAMES = time wt ds1-ds4 ns1-ns4 dr1-dr4 cr1 cr2 ru1 ru2 
+    a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov;
+  USEVARIABLES = cr1 cr2 a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 
+    mlk gov;
+  USEOBS = (time == 2);
+  WEIGHT = wt;
+  MISSING = ALL(-9);
+ANALYSIS: ESTIMATOR = MLR;
+MODEL:
+
+CR BY cr1@1 cr2@1;
+CR ON a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov;
+
+a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov;
+
+OUTPUT: STDYX;
+
+

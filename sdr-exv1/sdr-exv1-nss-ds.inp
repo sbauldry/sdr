@@ -1,0 +1,18 @@
+TITLE: (ExV1) Neighborhood school support & diversity support;
+DATA: FILE = sdr-data-time-mplus.txt;
+VARIABLE: NAMES = time wt ds1-ds4 ns1-ns4 dr1-dr4 cr1 cr2 ru1 ru2 
+    a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov;
+  USEVARIABLES = ns1 ns2 ns3 ns4 ds1 ds2 ds3 ds4;
+  USEOBS = (time == 2);
+  WEIGHT = wt;
+  MISSING = ALL(-9);
+ANALYSIS: ESTIMATOR = MLR;
+MODEL:
+
+NSS BY ns1 ns2 ns3 ns4;
+DS BY ds1 ds2 ds3 ds4;
+ds1 WITH ds2 ds3;
+
+OUTPUT: STDYX;
+
+
