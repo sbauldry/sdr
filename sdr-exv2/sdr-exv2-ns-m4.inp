@@ -1,0 +1,18 @@
+TITLE: (MGCFA4) Neighborhood School Support;
+DATA: FILE = sdr-data-time-mplus.txt;
+VARIABLE: NAMES = site wt ds1-ds4 ns1-ns4 a2 a3 fem wht mar 
+    ach edu i2 i3 liv p2 p3 mlk gov;
+  USEVARIABLES = ns1 ns2 ns3 ns4;
+  WEIGHT = wt;
+  MISSING = ALL(-9);
+  GROUP = site(1 = 2015 2 = 2011);
+ANALYSIS: ESTIMATOR = MLR;
+MODEL:
+
+NeiSup BY ns1 ns2 ns3 ns4;
+ns1 (1); ns2 (2); ns3 (3); ns4 (4);
+NeiSup (5);
+
+OUTPUT: STDYX;
+
+
