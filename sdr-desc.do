@@ -11,7 +11,7 @@ sum ns1-ns4 ds1-ds4 cr1 cr2 dr1-dr4 ru1 ru2 if time == 2
 sum ns1-ns4 ds1-ds4 cr1 cr2 dr1-dr4 ru1 ru2 if time == 1
 
 * covariate descriptives
-
+sum act fem wht mar ach edu ict liv pol mlk gov if time == 2
 
 *** Load site data
 use sdr-data-site, replace

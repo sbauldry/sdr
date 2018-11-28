@@ -130,14 +130,14 @@ gen chr = cr1 + cr2
 gen reu = ru1 + ru2
 
 * sociodemographics
-recode q46q47age1 (0/30 = 1) (31/45 = 2) (45/99 = 3), gen(act)
+recode q46q47age1 (21/30 = 1) (31/45 = 2) (45/99 = 3), gen(act)
 recode q49householdinc (1 = 1) (2 3 = 2) (4 5 6 = 3), gen(ict)
 recode q51education (1 = 10) (2 = 12) (3 = 14) (4 = 16) (5 = 18), gen(edu)
 gen ach = (q67numberchildren > 0) if !mi(q67numberchildren)
 gen fem = (q48gender == 2) if !mi(q48gender)
 gen wht = (q50race == 2) if !mi(q50race)
 gen mar = (q6married == 1) if !mi(q6married)
-rename (q17ideology) (pol) 
+recode q17ideology (4 = .), gen(pol) 
 recode q39localgovt (5 = .) (1 = 4) (2 = 3) (3 = 2) (4 = 1), gen(gov)
 gen mlk = (q42mlk == 1) if !mi(q42mlk)
 recode q2lengthwake (1 = 5) (2 3 = 1) (4 = 2) (5 = 3) (6 = 4), gen(liv)
