@@ -1,0 +1,19 @@
+TITLE: (MGCFA2) Diversity Support;
+DATA: FILE = sdr-data-site-mplus.txt;
+VARIABLE: NAMES = site wt ds1-ds4 ns1-ns4 a2 a3 fem wht mar 
+    ach edu i2 i3 liv p2 p3 mlk gov spp;
+  USEVARIABLES = ds1 ds2 ds3 ds4;
+  WEIGHT = wt;
+  MISSING = ALL(-9);
+  GROUP = site(1 = Wake 2 = CMS 3 = RH 4 = Lou 5 = Nash);
+ANALYSIS: ESTIMATOR = MLR;
+MODEL:
+
+DivSup BY ds1 ds2 ds3 ds4;
+ds1 (1); ds2 (2); ds3 (3); ds4 (4);
+ds1 WITH ds2 (5);
+ds1 WITH ds3 (6);
+
+OUTPUT: STDYX;
+
+

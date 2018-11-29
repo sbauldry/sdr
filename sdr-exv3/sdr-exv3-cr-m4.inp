@@ -1,0 +1,18 @@
+TITLE: (MGCFA4) Reassignment Challenges;
+DATA: FILE = sdr-data-site-mplus.txt;
+VARIABLE: NAMES = site wt ds1-ds4 ns1-ns4 dr1-dr4 cr1 cr2 ru1 ru2 
+    a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov spp;
+  USEVARIABLES = cr1 cr2;
+  WEIGHT = wt;
+  MISSING = ALL(-9);
+  GROUP = site(1 = Wake 2 = CMS 3 = RH 4 = Lou 5 = Nash);
+ANALYSIS: ESTIMATOR = MLR;
+MODEL:
+
+CR BY cr1@1 cr2@1;
+cr1 (1); cr2 (2);
+CR (3);
+
+OUTPUT: STDYX;
+
+

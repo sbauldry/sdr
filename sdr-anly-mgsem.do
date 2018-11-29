@@ -253,66 +253,59 @@ gen ub = b + 1.96*sqrt(v)
 gen id = 3*vr + 0.3*gp
 
 tempfile g1 g2 g3 g4 g5
-graph twoway (rspike ub lb id if lv == 1, hor)                              ///
-  (scatter id b if lv == 1, msize(tiny) mcolor(black)),                     ///
-  legend(off) ylab(3.5 "age 31-45" 6.5 "age 46+" 9.5 "female" 12.5 "white"  ///
-    15.5 "married" 18.5 "school age kids" 21.5 "education"                  ///
-	24.5 "income 25-75K" 27.5 "income 76K+" 30.5 "years lived"              ///
-	33.5 "moderate" 36.5 "conservative" 39.5 "MLK very favorable"           ///
-	42.5 "trust government", angle(h) grid gstyle(dot)) ytit("")            ///
-	xtit("unstandardized estimate") xlab(-1(0.5)1.5, grid gstyle(dot))      ///
-	title("Diversity Support") text(12.5 -1 "*") saving(`g1')
-
 graph twoway (rspike ub lb id if lv == 2, hor)                              ///
   (scatter id b if lv == 2, msize(tiny) mcolor(black)),                     ///
   legend(off) ylab(3.5 "age 31-45" 6.5 "age 46+" 9.5 "female" 12.5 "white"  ///
-    15.5 "married" 18.5 "school age kids" 21.5 "education"                  ///
-	24.5 "income 25-75K" 27.5 "income 76K+" 30.5 "years lived"              ///
-	33.5 "moderate" 36.5 "conservative" 39.5 "MLK very favorable"           ///
-	42.5 "trust government", angle(h) grid gstyle(dot)) ytit("")            ///
+    15.5 "married" 18.5 "school kids" 21.5 "education" 24.5 "inc $25-75K"   ///
+	27.5 "inc $76K+" 30.5 "years res" 33.5 "moderate" 36.5 "conservative"   ///
+	39.5 "MLK" 42.5 "trust", angle(h) grid gstyle(dot) labs(small)) ytit("") ///
 	xtit("unstandardized estimate") xlab(-1(0.5)1.5, grid gstyle(dot))      ///
-	title("Neighborhood Sch Sup") text(12.5 -1 "**") text(21.5 -1 "*")      ///
+	title("Neigh School") text(12.5 -1 "**") text(21.5 -1 "*")             ///
 	text(27.5 -1 "*") text(30.5 -1 "**") text(33.5 -1 "**")                 ///
-	text(36.5 -1 "**") text(39.5 -1 "***") saving(`g2')
+	text(36.5 -1 "**") text(39.5 -1 "***") saving(`g1')
 
-graph twoway (rspike ub lb id if lv == 3, hor)                              ///
-  (scatter id b if lv == 3, msize(tiny) mcolor(black)),                     ///
+graph twoway (rspike ub lb id if lv == 1, hor)                              ///
+  (scatter id b if lv == 1, msize(tiny) mcolor(black)),                     ///
   legend(off) ylab(3.5 "age 31-45" 6.5 "age 46+" 9.5 "female" 12.5 "white"  ///
-    15.5 "married" 18.5 "school age kids" 21.5 "education"                  ///
-	24.5 "income 25-75K" 27.5 "income 76K+" 30.5 "years lived"              ///
-	33.5 "moderate" 36.5 "conservative" 39.5 "MLK very favorable"           ///
-	42.5 "trust government", angle(h) grid gstyle(dot)) ytit("")            ///
+    15.5 "married" 18.5 "school kids" 21.5 "education" 24.5 "inc $25-75K"   ///
+	27.5 "inc $76K+" 30.5 "years res" 33.5 "moderate" 36.5 "conservative"   ///
+	39.5 "MLK" 42.5 "trust", angle(h) grid gstyle(dot) labs(small)) ytit("") ///
 	xtit("unstandardized estimate") xlab(-1(0.5)1.5, grid gstyle(dot))      ///
-	title("Dangers") text(3.5 -1 "*") text(6.5 -1 "*") text(24.5 -1 "*")    ///
-	text(27.5 -1 "*") saving(`g3')
+	title("Diversity") text(12.5 -1 "*") saving(`g2')
 
 graph twoway (rspike ub lb id if lv == 4, hor)                              ///
   (scatter id b if lv == 4, msize(tiny) mcolor(black)),                     ///
   legend(off) ylab(3.5 "age 31-45" 6.5 "age 46+" 9.5 "female" 12.5 "white"  ///
-    15.5 "married" 18.5 "school age kids" 21.5 "education"                  ///
-	24.5 "income 25-75K" 27.5 "income 76K+" 30.5 "years lived"              ///
-	33.5 "moderate" 36.5 "conservative" 39.5 "MLK very favorable"           ///
-	42.5 "trust government", angle(h) grid gstyle(dot)) ytit("")            ///
+    15.5 "married" 18.5 "school kids" 21.5 "education" 24.5 "inc $25-75K"   ///
+	27.5 "inc $76K+" 30.5 "years res" 33.5 "moderate" 36.5 "conservative"   ///
+	39.5 "MLK" 42.5 "trust", angle(h) grid gstyle(dot) labs(small)) ytit("") ///
 	xtit("unstandardized estimate") xlab(-1(0.5)1.5, grid gstyle(dot))      ///
 	title("Challenges") text(24.5 -1 "*") text(27.5 -1 "*")                 ///
-	text(33.5 -1 "*") saving(`g4')
-	
+	text(33.5 -1 "*") saving(`g3')
+
+graph twoway (rspike ub lb id if lv == 3, hor)                              ///
+  (scatter id b if lv == 3, msize(tiny) mcolor(black)),                     ///
+  legend(off) ylab(3.5 "age 31-45" 6.5 "age 46+" 9.5 "female" 12.5 "white"  ///
+    15.5 "married" 18.5 "school kids" 21.5 "education" 24.5 "inc $25-75K"   ///
+	27.5 "inc $76K+" 30.5 "years res" 33.5 "moderate" 36.5 "conservative"   ///
+	39.5 "MLK" 42.5 "trust", angle(h) grid gstyle(dot) labs(small)) ytit("") ///
+	xtit("unstandardized estimate") xlab(-1(0.5)1.5, grid gstyle(dot))      ///
+	title("Dangers") text(3.5 -1 "*") text(6.5 -1 "*") text(24.5 -1 "*")    ///
+	text(27.5 -1 "*") saving(`g4')
+
 graph twoway (rspike ub lb id if lv == 5, hor)                              ///
   (scatter id b if lv == 5, msize(tiny) mcolor(black)),                     ///
   legend(off) ylab(3.5 "age 31-45" 6.5 "age 46+" 9.5 "female" 12.5 "white"  ///
-    15.5 "married" 18.5 "school age kids" 21.5 "education"                  ///
-	24.5 "income 25-75K" 27.5 "income 76K+" 30.5 "years lived"              ///
-	33.5 "moderate" 36.5 "conservative" 39.5 "MLK very favorable"           ///
-	42.5 "trust government", angle(h) grid gstyle(dot)) ytit("")            ///
+    15.5 "married" 18.5 "school kids" 21.5 "education" 24.5 "inc $25-75K"   ///
+	27.5 "inc $76K+" 30.5 "years res" 33.5 "moderate" 36.5 "conservative"   ///
+	39.5 "MLK" 42.5 "trust", angle(h) grid gstyle(dot) labs(small)) ytit("") ///
 	xtit("unstandardized estimate") xlab(-1(0.5)1.5, grid gstyle(dot))      ///
 	title("Uncertainty") text(27.5 -1 "*") saving(`g5')
-graph export ~/desktop/fig6.pdf, replace
-	
-graph combine "`g1'" "`g2'"
-graph export ~/desktop/fig4.pdf, replace
 
-graph combine "`g3'" "`g4'"
-graph export ~/desktop/fig5.pdf, replace
+graph combine "`g1'" "`g2'" "`g3'" "`g4'" "`g5'"
+graph export ~/desktop/fig3.pdf, replace
+	
+
 	
 	
 	

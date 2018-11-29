@@ -71,23 +71,17 @@ tempfile d1
 postutil clear
 postfile PF1 str4 lv str4 model warn m1 v1 m2 v2 m3 v3 m4 v4 m5 v5 sm1 sv1 ///
   sm2 sv2 sm3 sv3 sm4 sv4 sm5 sv5 using `d1', replace
-  
-ParEst DS  DS1 site PF1 sdr-mplus-7/sdr-mgcfa-site-ds-2.out
-ParEst NSS NS1 site PF1 sdr-mplus-7/sdr-mgcfa-site-ns-2.out
-ParEst DR  DR1 site PF1 sdr-mplus-8/sdr-mgcfa-site-dr-2.out
-ParEst RU  RU1 site PF1 sdr-mplus-8/sdr-mgcfa-site-ru-2.out
-ParEst CR  CR1 site PF1 sdr-mplus-8/sdr-mgcfa-site-cr-2.out
 
-ParEst DS  DS1 time PF1 sdr-mplus-7/sdr-mgcfa-time-ds-2.out
-ParEst NSS NS1 time PF1 sdr-mplus-7/sdr-mgcfa-time-ns-2.out
-ParEst DR  DR1 time PF1 sdr-mplus-8/sdr-mgcfa-time-dr-2.out
-ParEst RU  RU1 time PF1 sdr-mplus-8/sdr-mgcfa-time-ru-2.out
-ParEst CR  CR1 time PF1 sdr-mplus-8/sdr-mgcfa-time-cr-2.out
+ParEst DS  DS1 time PF1 sdr-exv2/sdr-exv2-ds-m2.out
+ParEst NSS NS1 time PF1 sdr-exv2/sdr-exv2-ns-m2.out
+ParEst DR  DR1 time PF1 sdr-exv2/sdr-exv2-dr-m2.out
+ParEst RU  RU1 time PF1 sdr-exv2/sdr-exv2-ru-m2.out
+ParEst CR  CR1 time PF1 sdr-exv2/sdr-exv2-cr-m2.out
 
 postclose PF1
 
 
-*** Prepare figure of latent means and variances
+*** Prepare figure of latent means and variances over time
 use `d1', replace
 
 drop warn
@@ -101,16 +95,36 @@ foreach x in m v {
   gen ub`x' = `x' + 1.96*s`x'
 }
 
-replace site = site + 6 if model == "time"
-gen id = site
+gen id = 1 if lv == "RU" & site == 1
+replace id = 1.5 if lv == "RU" & site == 2
+replace id = 2.5 if lv == "DR" & site == 1
+replace id = 3   if lv == "DR" & site == 2
+replace id = 4   if lv == "CR" & site == 1
+replace id = 4.5 if lv == "CR" & site == 2
+replace id = 5.5 if lv == "DS" & site == 1
+replace id = 6   if lv == "DS" & site == 2
+replace id = 7   if lv == "NSS" & site == 1
+replace id = 7.5 if lv == "NSS" & site == 2
 
-tempfile g1 g2 g3 g4 g5 g6
-graph twoway (rcap ubm lbm id if lv == "DS", hor)                          ///
-  (scatter id m if lv == "DS", mc(black)), legend(off)                     ///
-  xlab(-0.6(0.2)0.6, grid gstyle(dot)) ylab(1 "Wake" 2 "CMS" 3 "Rock Hill" ///
-    4 "Louisville" 5 "Nashville" 6 " " 7 "Wake 2015" 8 "Wake 2011",        ///
-	angle(h) grid gstyle(dot)) xtit("estimate") ytit("")                   ///
-  tit("Latent Means") saving(`g1')
+tempfile g1 g2 
+graph twoway (rcap ubm lbm id, hor) (scatter id m, mc(black)), legend(off) ///
+  xlab(-0.6(0.2)0.6, grid gstyle(dot)) ylab(1 "RU 2015" 1.5 "RU 2011"      ///
+    2.5 "RD 2015" 3 "RD 2011" 4 "CR 2015" 4.5 "CR 2011" 5.5 "DS 2015"      ///
+	6 "DS 2011" 7 "NS 2015" 7.5 "NS 2011", angle(h) grid gstyle(dot))      ///
+  xtit("estimate") ytit("") tit("Latent Means") saving(`g1')
+  
+graph twoway (rcap ubv lbv id, hor) (scatter id v, mc(black)), legend(off) ///
+  xlab(0(0.2)1.4, grid gstyle(dot)) ylab(1 "RU 2015" 1.5 "RU 2011"         ///
+    2.5 "RD 2015" 3 "RD 2011" 4 "CR 2015" 4.5 "CR 2011" 5.5 "DS 2015"      ///
+	6 "DS 2011" 7 "NS 2015" 7.5 "NS 2011", angle(h) grid gstyle(dot))      ///
+  xtit("estimate") ytit("") tit("Latent Variances") saving(`g2')
+  
+graph combine "`g1'" "`g2'", rows(1)
+graph export ~/desktop/fig1.pdf, replace 
+
+  
+  
+  
   
 graph twoway (rcap ubv lbv id if lv == "DS", hor)                       ///
   (scatter id v if lv == "DS", mc(black)), legend(off)                  ///
@@ -139,7 +153,7 @@ graph combine "`g4'" "`g5'", rows(1) tit("Neighborhood School Support") ///
   saving(`g6')
   
 graph combine "`g3'" "`g6'", rows(2)
-graph export ~/desktop/fig1.pdf, replace
+
 
 
 

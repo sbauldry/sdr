@@ -1,0 +1,20 @@
+TITLE: (MGCFA4) Dangers of Reassignment;
+DATA: FILE = sdr-data-site-mplus.txt;
+VARIABLE: NAMES = site wt ds1-ds4 ns1-ns4 dr1-dr4 cr1 cr2 ru1 ru2 
+    a2 a3 fem wht mar ach edu i2 i3 liv p2 p3 mlk gov spp;
+  USEVARIABLES = dr1 dr2 dr3 dr4;
+  WEIGHT = wt;
+  MISSING = ALL(-9);
+  GROUP = site(1 = Wake 2 = CMS 3 = RH 4 = Lou 5 = Nash);
+ANALYSIS: ESTIMATOR = MLR;
+MODEL:
+
+DR BY dr1 dr2 dr3 dr4;
+dr1 (1); dr2 (2); dr3 (3); dr4 (4);
+dr1 WITH dr2 (5);
+dr1 WITH dr3 (6);
+DR (7);
+
+OUTPUT: STDYX;
+
+
