@@ -66,7 +66,7 @@ program ParEst
 end
   
 
-*** Extract parameter estimates
+*** Extract parameter estimates for external validity 2
 tempfile d1
 postutil clear
 postfile PF1 str4 lv str4 model warn m1 v1 m2 v2 m3 v3 m4 v4 m5 v5 sm1 sv1 ///
@@ -123,93 +123,66 @@ graph combine "`g1'" "`g2'", rows(1)
 graph export ~/desktop/fig1.pdf, replace 
 
   
+
   
-  
-  
-graph twoway (rcap ubv lbv id if lv == "DS", hor)                       ///
-  (scatter id v if lv == "DS", mc(black)), legend(off)                  ///
-  xlab(0(0.2)1.6, grid gstyle(dot)) ylab(1 "Wake" 2 "CMS" 3 "Rock Hill" ///
-    4 "Louisville" 5 "Nashville" 6 " " 7 "Wake 2015" 8 "Wake 2011",     ///
-	angle(h) grid gstyle(dot)) xtit("estimate") ytit("")                ///
-  tit("Latent Variances") saving(`g2')
-  
-graph combine "`g1'" "`g2'", rows(1) tit("Diversity Support") saving(`g3')
-  
-graph twoway (rcap ubm lbm id if lv == "NSS", hor)                         ///
-  (scatter id m if lv == "NSS", mc(black)), legend(off)                    ///
-  xlab(-0.6(0.2)0.6, grid gstyle(dot)) ylab(1 "Wake" 2 "CMS" 3 "Rock Hill" ///
-    4 "Louisville" 5 "Nashville" 6 " " 7 "Wake 2015" 8 "Wake 2011",        ///
-	angle(h) grid gstyle(dot)) xtit("estimate") ytit("")                   ///
-  tit("Latent Means") saving(`g4')
-  
-graph twoway (rcap ubv lbv id if lv == "NSS", hor)                       ///
-  (scatter id v if lv == "NSS", mc(black)), legend(off)                  ///
-  xlab(0(0.2)1.6, grid gstyle(dot)) ylab(1 "Wake" 2 "CMS" 3 "Rock Hill"  ///
-    4 "Louisville" 5 "Nashville" 6 " " 7 "Wake 2015" 8 "Wake 2011",      ///
-	angle(h) grid gstyle(dot)) xtit("estimate") ytit("")                 ///
-  tit("Latent Variances") saving(`g5')
-  
-graph combine "`g4'" "`g5'", rows(1) tit("Neighborhood School Support") ///
-  saving(`g6')
-  
-graph combine "`g3'" "`g6'", rows(2)
+*** Extract parameter estimates for external validity 3
+tempfile d2
+postutil clear
+postfile PF2 str4 lv str4 model warn m1 v1 m2 v2 m3 v3 m4 v4 m5 v5 sm1 sv1 ///
+  sm2 sv2 sm3 sv3 sm4 sv4 sm5 sv5 using `d2', replace
+
+ParEst DS DS1 site PF2 sdr-exv3/sdr-exv3-ds-m2.out
+ParEst NS NS1 site PF2 sdr-exv3/sdr-exv3-ns-m2.out
+ParEst DR DR1 site PF2 sdr-exv3/sdr-exv3-dr-m2.out
+ParEst RU RU1 site PF2 sdr-exv3/sdr-exv3-ru-m2.out
+ParEst CR CR1 site PF2 sdr-exv3/sdr-exv3-cr-m2.out
+
+postclose PF2
 
 
+*** Prepare figure of latent means and variances over time
+use `d2', replace
 
+drop warn
+gen id = _n
+reshape long m v sm sv, i(id) j(site)
+drop id
+drop if mi(m)
 
-tempfile g1 g2 g3 g4 g5 g6
-graph twoway (rcap ubm lbm id if lv == "DR", hor)                          ///
-  (scatter id m if lv == "DR", mc(black)), legend(off)                     ///
-  xlab(-0.6(0.2)0.6, grid gstyle(dot)) ylab(1 "Wake" 2 "CMS" 3 "Rock Hill" ///
-    4 "Louisville" 5 "Nashville" 6 " " 7 "Wake 2015" 8 "Wake 2011",        ///
-	angle(h) grid gstyle(dot)) xtit("estimate") ytit("")                   ///
-  tit("Latent Means") saving(`g1')
-  
-graph twoway (rcap ubv lbv id if lv == "DR", hor)                        ///
-  (scatter id v if lv == "DR", mc(black)), legend(off)                   ///
-  xlab(0(0.2)1.6, grid gstyle(dot)) ylab(1 "Wake" 2 "CMS" 3 "Rock Hill"  ///
-    4 "Louisville" 5 "Nashville" 6 " " 7 "Wake 2015" 8 "Wake 2011",      ///
-	angle(h) grid gstyle(dot)) xtit("estimate") ytit("")                 ///
-  tit("Latent Variances") saving(`g2')
-  
-graph combine "`g1'" "`g2'", rows(1) tit("Dangers of Reassignment") saving(`g3')
-  
-graph twoway (rcap ubm lbm id if lv == "CR", hor)                          ///
-  (scatter id m if lv == "CR", mc(black)), legend(off)                     ///
-  xlab(-0.6(0.2)0.6, grid gstyle(dot)) ylab(1 "Wake" 2 "CMS" 3 "Rock Hill" ///
-    4 "Louisville" 5 "Nashville" 6 " " 7 "Wake 2015" 8 "Wake 2011",        ///
-	angle(h) grid gstyle(dot)) xtit("estimate") ytit("")                   ///
-  tit("Latent Means") saving(`g4')
-  
-graph twoway (rcap ubv lbv id if lv == "CR", hor)                       ///
-  (scatter id v if lv == "CR", mc(black)), legend(off)                  ///
-  xlab(0(0.2)1.6, grid gstyle(dot)) ylab(1 "Wake" 2 "CMS" 3 "Rock Hill" ///
-    4 "Louisville" 5 "Nashville" 6 " " 7 "Wake 2015" 8 "Wake 2011",     ///
-	angle(h) grid gstyle(dot)) xtit("estimate") ytit("")                ///
-  tit("Latent Variances") saving(`g5')
-  
-graph combine "`g4'" "`g5'", rows(1) tit("Challenges of Reassignment") ///
-  saving(`g6')
-  
-graph combine "`g3'" "`g6'", rows(2)
-graph export ~/desktop/fig2.pdf, replace
+foreach x in m v {
+  gen lb`x' = `x' - 1.96*s`x'
+  gen ub`x' = `x' + 1.96*s`x'
+}
 
+gen id = .
+local j = -3
+foreach x in RU DR CR DS NS {
+  local j = `j' + 3
+  local k = -0.4
+  forval i = 1/5 {
+    local k = `k' + 0.4
+	replace id = `j' + `k' if lv == "`x'" & site == `i'
+  }
+}
 
-
-tempfile g1 g2
-graph twoway (rcap ubm lbm id if lv == "RU", hor)                          ///
-  (scatter id m if lv == "RU", mc(black)), legend(off)                     ///
-  xlab(-0.6(0.2)0.6, grid gstyle(dot)) ylab(1 "Wake" 2 "CMS" 3 "Rock Hill" ///
-    4 "Louisville" 5 "Nashville" 6 " " 7 "Wake 2015" 8 "Wake 2011",        ///
-	angle(h) grid gstyle(dot)) xtit("estimate") ytit("")                   ///
-  tit("Latent Means") saving(`g1')
+tempfile g1 g2 
+graph twoway (rcap ubm lbm id, hor) (scatter id m, mc(black)), legend(off) ///
+  xlab(-0.6(0.2)0.6, grid gstyle(dot)) ylab(0 "RU Wake" 0.4 "RU CMS"       ///
+    0.8 "RU RH" 1.2 "RU Lou" 1.6 "RU Nash" 3 "DR Wake" 3.4 "DR CMS"        ///
+    3.8 "DR RH" 4.2 "DR Lou" 4.6 "DR Nash" 6 "CR Wake" 6.4 "CR CMS"        ///
+    6.8 "CR RH" 7.2 "CR Lou" 7.6 "CR Nash" 9 "DS Wake" 9.4 "DS CMS"        ///
+    9.8 "DS RH" 10.2 "DS Lou" 10.6 "DS Nash" 12 "NS Wake" 12.4 "NS CMS"        ///
+    12.8 "NS RH" 13.2 "NS Lou" 13.6 "NS Nash", angle(h) grid gstyle(dot) labs(small))     ///
+  xtit("estimate") ytit("") tit("Latent Means") saving(`g1')
   
-graph twoway (rcap ubv lbv id if lv == "RU", hor)                        ///
-  (scatter id v if lv == "RU", mc(black)), legend(off)                   ///
-  xlab(0(0.2)1.6, grid gstyle(dot)) ylab(1 "Wake" 2 "CMS" 3 "Rock Hill"  ///
-    4 "Louisville" 5 "Nashville" 6 " " 7 "Wake 2015" 8 "Wake 2011",      ///
-	angle(h) grid gstyle(dot)) xtit("estimate") ytit("")                 ///
-  tit("Latent Variances") saving(`g2')
+graph twoway (rcap ubv lbv id, hor) (scatter id v, mc(black)), legend(off) ///
+  xlab(0(0.2)1.6, grid gstyle(dot)) ylab(0 "RU Wake" 0.4 "RU CMS"       ///
+    0.8 "RU RH" 1.2 "RU Lou" 1.6 "RU Nash" 3 "DR Wake" 3.4 "DR CMS"        ///
+    3.8 "DR RH" 4.2 "DR Lou" 4.6 "DR Nash" 6 "CR Wake" 6.4 "CR CMS"        ///
+    6.8 "CR RH" 7.2 "CR Lou" 7.6 "CR Nash" 9 "DS Wake" 9.4 "DS CMS"        ///
+    9.8 "DS RH" 10.2 "DS Lou" 10.6 "DS Nash" 12 "NS Wake" 12.4 "NS CMS"        ///
+    12.8 "NS RH" 13.2 "NS Lou" 13.6 "NS Nash", angle(h) grid gstyle(dot) labs(small))     ///
+  xtit("estimate") ytit("") tit("Latent Variances") saving(`g2')
   
-graph combine "`g1'" "`g2'", rows(1) tit("Reassignment Uncertainties")
-graph export ~/desktop/fig3.pdf, replace
+graph combine "`g1'" "`g2'", rows(1)
+graph export ~/desktop/fig2.pdf, replace 
