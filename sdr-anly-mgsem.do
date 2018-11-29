@@ -306,66 +306,55 @@ graph combine "`g1'" "`g2'" "`g3'" "`g4'" "`g5'"
 graph export ~/desktop/fig3.pdf, replace
 	
 
-	
-	
-	
+
 tempfile g1 g2 g3 g4 g5
-graph twoway (rspike ub lb id if lv == 6, hor)                              ///
-  (scatter id b if lv == 6, msize(tiny) mcolor(black)),                     ///
-  legend(off) ylab(4.5 "age 31-45" 7.5 "age 46+" 10.5 "female" 13.5 "white" ///
-    16.5 "married" 19.5 "school age kids" 22.5 "education"                  ///
-	25.5 "income 25-75K" 28.5 "income 76K+" 31.5 "years lived"              ///
-	34.5 "moderate" 37.5 "conservative" 40.5 "MLK very favorable"           ///
-	43.5 "trust government" 46.5 "social purpose politics", angle(h) grid   ///
-	gstyle(dot)) ytit("") xtit("unstandardized estimate") xlab(-1(0.5)1,    ///
-  grid gstyle(dot)) title("Diversity Support") saving(`g1')
-  
 graph twoway (rspike ub lb id if lv == 7, hor)                              ///
   (scatter id b if lv == 7, msize(tiny) mcolor(black)),                     ///
   legend(off) ylab(4.5 "age 31-45" 7.5 "age 46+" 10.5 "female" 13.5 "white" ///
-    16.5 "married" 19.5 "school age kids" 22.5 "education"                  ///
-	25.5 "income 25-75K" 28.5 "income 76K+" 31.5 "years lived"              ///
-	34.5 "moderate" 37.5 "conservative" 40.5 "MLK very favorable"           ///
-	43.5 "trust government" 46.5 "social purpose politics", angle(h) grid   ///
+    16.5 "married" 19.5 "school kids" 22.5 "education" 25.5 "inc $25-75K"   ///
+	28.5 "inc 76K+" 31.5 "years res" 34.5 "moderate" 37.5 "conservative"    ///
+	40.5 "MLK" 43.5 "trust" 46.5 "soc pur pol", angle(h) grid labs(small)   ///
 	gstyle(dot)) ytit("") xtit("unstandardized estimate") xlab(-1(0.5)1,    ///
-  grid gstyle(dot)) title("Neighborhood Sch Sup") text(4.5 -1 "*")          ///
-  text(7.5 -1 "*") text(16.5 -1 "*") saving(`g2')
-  
-graph twoway (rspike ub lb id if lv == 8, hor)                              ///
-  (scatter id b if lv == 8, msize(tiny) mcolor(black)),                     ///
+  grid gstyle(dot)) title("Neigh School") text(4.5 -1 "*") text(7.5 -1 "*") ///
+  text(16.5 -1 "*") saving(`g1')
+
+graph twoway (rspike ub lb id if lv == 6, hor)                              ///
+  (scatter id b if lv == 6, msize(tiny) mcolor(black)),                     ///
   legend(off) ylab(4.5 "age 31-45" 7.5 "age 46+" 10.5 "female" 13.5 "white" ///
-    16.5 "married" 19.5 "school age kids" 22.5 "education"                  ///
-	25.5 "income 25-75K" 28.5 "income 76K+" 31.5 "years lived"              ///
-	34.5 "moderate" 37.5 "conservative" 40.5 "MLK very favorable"           ///
-	43.5 "trust government" 46.5 "social purpose politics", angle(h) grid   ///
+    16.5 "married" 19.5 "school kids" 22.5 "education" 25.5 "inc $25-75K"   ///
+	28.5 "inc 76K+" 31.5 "years res" 34.5 "moderate" 37.5 "conservative"    ///
+	40.5 "MLK" 43.5 "trust" 46.5 "soc pur pol", angle(h) grid labs(small)   ///
 	gstyle(dot)) ytit("") xtit("unstandardized estimate") xlab(-1(0.5)1,    ///
-  grid gstyle(dot)) title("Dangers") text(4.5 -1 "*") text(7.5 -1 "**")     ///
-  text(10.5 -1 "*") text(25.5 -1 "***") text(28.5 -1 "*") saving(`g3')
+  grid gstyle(dot)) title("Diversity") saving(`g2')
   
 graph twoway (rspike ub lb id if lv == 9, hor)                              ///
   (scatter id b if lv == 9, msize(tiny) mcolor(black)),                     ///
   legend(off) ylab(4.5 "age 31-45" 7.5 "age 46+" 10.5 "female" 13.5 "white" ///
-    16.5 "married" 19.5 "school age kids" 22.5 "education"                  ///
-	25.5 "income 25-75K" 28.5 "income 76K+" 31.5 "years lived"              ///
-	34.5 "moderate" 37.5 "conservative" 40.5 "MLK very favorable"           ///
-	43.5 "trust government" 46.5 "social purpose politics", angle(h) grid   ///
+    16.5 "married" 19.5 "school kids" 22.5 "education" 25.5 "inc $25-75K"   ///
+	28.5 "inc 76K+" 31.5 "years res" 34.5 "moderate" 37.5 "conservative"    ///
+	40.5 "MLK" 43.5 "trust" 46.5 "soc pur pol", angle(h) grid labs(small)   ///
 	gstyle(dot)) ytit("") xtit("unstandardized estimate") xlab(-1(0.5)1,    ///
   grid gstyle(dot)) title("Challenges") text(25.5 -1 "*") text(46.5 -1 "*") ///
-  saving(`g4')
+  saving(`g3')
   
+graph twoway (rspike ub lb id if lv == 8, hor)                              ///
+  (scatter id b if lv == 8, msize(tiny) mcolor(black)),                     ///
+  legend(off) ylab(4.5 "age 31-45" 7.5 "age 46+" 10.5 "female" 13.5 "white" ///
+    16.5 "married" 19.5 "school kids" 22.5 "education" 25.5 "inc $25-75K"   ///
+	28.5 "inc 76K+" 31.5 "years res" 34.5 "moderate" 37.5 "conservative"    ///
+	40.5 "MLK" 43.5 "trust" 46.5 "soc pur pol", angle(h) grid labs(small)   ///
+	gstyle(dot)) ytit("") xtit("unstandardized estimate") xlab(-1(0.5)1,    ///
+  grid gstyle(dot)) title("Dangers") text(4.5 -1 "*") text(7.5 -1 "**")     ///
+  text(10.5 -1 "*") text(25.5 -1 "***") text(28.5 -1 "*") saving(`g4')
+   
 graph twoway (rspike ub lb id if lv == 10, hor)                             ///
   (scatter id b if lv == 10, msize(tiny) mcolor(black)),                    ///
   legend(off) ylab(4.5 "age 31-45" 7.5 "age 46+" 10.5 "female" 13.5 "white" ///
-    16.5 "married" 19.5 "school age kids" 22.5 "education"                  ///
-	25.5 "income 25-75K" 28.5 "income 76K+" 31.5 "years lived"              ///
-	34.5 "moderate" 37.5 "conservative" 40.5 "MLK very favorable"           ///
-	43.5 "trust government" 46.5 "social purpose politics", angle(h) grid   ///
+    16.5 "married" 19.5 "school kids" 22.5 "education" 25.5 "inc $25-75K"   ///
+	28.5 "inc 76K+" 31.5 "years res" 34.5 "moderate" 37.5 "conservative"    ///
+	40.5 "MLK" 43.5 "trust" 46.5 "soc pur pol", angle(h) grid labs(small)   ///
 	gstyle(dot)) ytit("") xtit("unstandardized estimate") xlab(-1(0.5)1,    ///
   grid gstyle(dot)) title("Uncertainty") text(28.5 -1 "*") saving(`g5')
-graph export ~/desktop/fig9.pdf, replace
-  
-graph combine "`g1'" "`g2'"
-graph export ~/desktop/fig7.pdf, replace
 
-graph combine "`g3'" "`g4'"
-graph export ~/desktop/fig8.pdf, replace
+graph combine "`g1'" "`g2'" "`g3'" "`g4'" "`g5'"
+graph export ~/desktop/fig4.pdf, replace
