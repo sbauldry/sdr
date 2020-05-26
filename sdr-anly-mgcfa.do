@@ -167,22 +167,22 @@ foreach x in RU DR CR DS NS {
 
 tempfile g1 g2 
 graph twoway (rcap ubm lbm id, hor) (scatter id m, mc(black)), legend(off) ///
-  xlab(-0.6(0.2)0.6, grid gstyle(dot)) ylab(0 "RU Wake" 0.4 "RU CMS"       ///
-    0.8 "RU RH" 1.2 "RU Lou" 1.6 "RU Nash" 3 "DR Wake" 3.4 "DR CMS"        ///
-    3.8 "DR RH" 4.2 "DR Lou" 4.6 "DR Nash" 6 "CR Wake" 6.4 "CR CMS"        ///
-    6.8 "CR RH" 7.2 "CR Lou" 7.6 "CR Nash" 9 "DS Wake" 9.4 "DS CMS"        ///
-    9.8 "DS RH" 10.2 "DS Lou" 10.6 "DS Nash" 12 "NS Wake" 12.4 "NS CMS"        ///
+  xlab(-0.6(0.2)0.6, grid gstyle(dot)) ylab(0 "RU Ral" 0.4 "RU Cha"       ///
+    0.8 "RU RH" 1.2 "RU Lou" 1.6 "RU Nash" 3 "DR Ral" 3.4 "DR Cha"        ///
+    3.8 "DR RH" 4.2 "DR Lou" 4.6 "DR Nash" 6 "CR Ral" 6.4 "CR Cha"        ///
+    6.8 "CR RH" 7.2 "CR Lou" 7.6 "CR Nash" 9 "DS Ral" 9.4 "DS Cha"        ///
+    9.8 "DS RH" 10.2 "DS Lou" 10.6 "DS Nash" 12 "NS Ral" 12.4 "NS Cha"        ///
     12.8 "NS RH" 13.2 "NS Lou" 13.6 "NS Nash", angle(h) grid gstyle(dot) labs(small))     ///
-  xtit("estimate") ytit("") tit("Latent Means") saving(`g1')
+  xtit("estimate") ytit("") tit("Latent Means") scheme(s1color) saving(`g1')
   
 graph twoway (rcap ubv lbv id, hor) (scatter id v, mc(black)), legend(off) ///
-  xlab(0(0.2)1.6, grid gstyle(dot)) ylab(0 "RU Wake" 0.4 "RU CMS"       ///
-    0.8 "RU RH" 1.2 "RU Lou" 1.6 "RU Nash" 3 "DR Wake" 3.4 "DR CMS"        ///
-    3.8 "DR RH" 4.2 "DR Lou" 4.6 "DR Nash" 6 "CR Wake" 6.4 "CR CMS"        ///
-    6.8 "CR RH" 7.2 "CR Lou" 7.6 "CR Nash" 9 "DS Wake" 9.4 "DS CMS"        ///
-    9.8 "DS RH" 10.2 "DS Lou" 10.6 "DS Nash" 12 "NS Wake" 12.4 "NS CMS"        ///
+  xlab(0(0.2)1.6, grid gstyle(dot)) ylab(0 "RU Ral" 0.4 "RU Cha"       ///
+    0.8 "RU RH" 1.2 "RU Lou" 1.6 "RU Nash" 3 "DR Ral" 3.4 "DR Cha"        ///
+    3.8 "DR RH" 4.2 "DR Lou" 4.6 "DR Nash" 6 "CR Ral" 6.4 "CR Cha"        ///
+    6.8 "CR RH" 7.2 "CR Lou" 7.6 "CR Nash" 9 "DS Ral" 9.4 "DS Cha"        ///
+    9.8 "DS RH" 10.2 "DS Lou" 10.6 "DS Nash" 12 "NS Ral" 12.4 "NS Cha"         ///
     12.8 "NS RH" 13.2 "NS Lou" 13.6 "NS Nash", angle(h) grid gstyle(dot) labs(small))     ///
-  xtit("estimate") ytit("") tit("Latent Variances") saving(`g2')
+  xtit("estimate") ytit("") tit("Latent Variances") scheme(s1color) saving(`g2')
   
-graph combine "`g1'" "`g2'", rows(1)
+graph combine "`g1'" "`g2'", rows(1) scheme(s1color)
 graph export ~/desktop/fig2.pdf, replace 
